@@ -5,6 +5,7 @@ export default {
         return {
             city : null,
             cityweather : null,
+            input: '',
         }
     },
     methods : {
@@ -21,9 +22,16 @@ export default {
                     console.log(response.statusText)
                     return;
                 }
-                that.cityweather = response.data.HeWeather6[0]
-                
+                let cityweatherArray = response.data.HeWeather6
+                if(!cityweatherArray){
+                    console.log('天气数据为空');
+                    return;
+                }
+                that.cityweather = cityweatherArray[0]
             })
+        },
+        getIcon(){
+            return require(`../assets/${this.cityweather.now.cond_code}.png`)
         }
     }
 }
@@ -31,12 +39,54 @@ export default {
 
 <template>
     <div class="q-main">
-        <input class="q-text" type="text" placeholder="请输入想查询城市名称" v-model="city"/>
-        <button class="q-sub" @click="getcity()">查询</button>
+        <el-input  placeholder="请输入想查询城市名称" v-model="city" class="q-text" ></el-input>
+        <el-button id="q-sub" class="el-icon-right" @click="getcity()"></el-button>
         <div v-if="cityweather" class="middle-main">
-            <img :src="require(`../assets/${this.cityweather.now.cond_code}.png`)"/>
-            <span>{{cityweather.now.tmp}}</span>
-            <span>{{cityweather.basic.location + ',' + cityweather.basic.cnty}}</span>
+            <img :src="getIcon()" class="q-icon"/>
+            <span class="q-tmp">{{cityweather.now.tmp + '°'}}</span>
+            <span class="q-location">{{cityweather.basic.location + ',' + cityweather.basic.cnty}}</span>
+        </div>
+        <div class="big-main" v-if="cityweather">
+            <ul class="q-ul" >
+                <li>{{'体感温度 :' + cityweather.now.fl + '°'}}</li><li>{{'相对湿度 :' + cityweather.now.hum}}</li>
+                <li>{{'降水量 :' + cityweather.now.pcpn}}</li><li>{{'能见度 :' + cityweather.now.vis}}</li>
+            </ul>
         </div>
     </div>
 </template>
+<style scoped>
+.q-text{
+    width: 300px;
+}
+#q-sub{
+    margin-left: 30px;
+}
+.middle-main{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.q-icon{
+    width: 50px;
+    height: 50px;
+    margin: 10px 0 0 0;
+   
+}
+.q-tmp{
+    margin: 10px 0 0 0;
+    font-size: 40px;
+}
+.q-location{
+    font-size: 18px;
+    margin: 10px 0 0 0;
+    
+}
+.q-ul li{
+    width: 150px;
+    list-style: none;
+    float: left;
+    margin-top: 20px;
+}
+</style>
+
