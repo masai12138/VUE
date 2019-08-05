@@ -144,7 +144,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 30px;
+  border-radius: 20px;
   margin: 10px 5px 5px 0;
 }
 .today{
