@@ -73,23 +73,23 @@ export default {
     <img class="q" src="../assets/q.png" v-on:click="q()"/>
     <div class="top" v-if="weather">
       <img class="top-condition-icon" :src="getCondImage()" alt=""/>
-      <div><span class="top-temperature">{{weather.now.tmp}}</span></div>
+      <div><span class="top-temperature">{{weather.now.tmp + '°'}}</span></div>
       <span class="top-location">{{weather.basic.location + ',' + weather.basic.cnty}}</span>
       <div class="middle" >
         <div class="today" >
           <span class="date">{{forecasttoday.date}}</span>
           <img class="middle-icon" alt="" :src="require(`../assets/${forecasttoday.cond_code_d}.png`)"/>
-          <span class="temperature">{{forecasttoday.tmp_min +'~'+forecasttoday.tmp_max}}</span>
+          <span class="temperature">{{forecasttoday.tmp_min + '°' +'~'+forecasttoday.tmp_max + '°'}}</span>
         </div>
         <div class="tomorrow">
           <span class="date">{{forecasttomorrow.date}}</span>
           <img class="middle-icon" alt="" :src="require(`../assets/${forecasttomorrow.cond_code_d}.png`)"/>
-          <span class="temperature">{{forecasttomorrow.tmp_min +'~'+forecasttomorrow.tmp_max}}</span>
+          <span class="temperature">{{forecasttomorrow.tmp_min + '°' +'~'+forecasttomorrow.tmp_max + '°'}}</span>
         </div>
         <div class="after-tomorrow">
           <span class="date">{{forecastafter.date}}</span>
           <img class="middle-icon" alt="" :src="require(`../assets/${forecastafter.cond_code_d}.png`)"/>
-          <span class="temperature">{{forecastafter.tmp_min +'~'+forecastafter.tmp_max}}</span>
+          <span class="temperature">{{forecastafter.tmp_min + '°' +'~'+forecastafter.tmp_max + '°'}}</span>
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@ export default {
     
 }
 .q{
-  margin-left: 355px;
+  float: right;
   margin-top: 10px;
   
 }
